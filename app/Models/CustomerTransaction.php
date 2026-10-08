@@ -150,9 +150,9 @@ class CustomerTransaction extends Model
         return $this->db()->first(
             'SELECT COUNT(*) AS count, COALESCE(SUM(amount), 0) AS total
                FROM customer_transactions
-              WHERE transaction_type = "sale"
+              WHERE transaction_type = ?
                 AND transaction_date = ?',
-            [$date]
+            ['sale', $date]
         ) ?? ['count' => 0, 'total' => 0];
     }
 }
