@@ -94,7 +94,7 @@ class Purchase extends Model
     public function weightSummary(int $id): array
     {
         $row = $this->db()->first(
-            'SELECT
+            "SELECT
                 p.total_weight_kg AS total,
                 COALESCE((SELECT SUM(a.assigned_weight_kg)
                             FROM purchase_clearance_assignments a
@@ -106,7 +106,7 @@ class Purchase extends Model
                             FROM goods_arrivals ga
                            WHERE ga.purchase_id = p.id), 0) AS verified
                FROM purchases p
-              WHERE p.id = ?',
+              WHERE p.id = ?",
             [$id]
         ) ?: ['total' => 0, 'cleared' => 0, 'arrived' => 0, 'verified' => 0];
 
