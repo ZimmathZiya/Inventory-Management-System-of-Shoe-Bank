@@ -308,24 +308,8 @@ CREATE TABLE IF NOT EXISTS customers (
     CONSTRAINT fk_customers_created_by FOREIGN KEY (created_by) REFERENCES users (id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Added here because article_transactions is declared with the inventory tables,
--- before the customer table exists during a fresh schema import. The conditional
--- DDL keeps repeated container startups safe.
-SET @article_customer_fk_exists := (
-    SELECT COUNT(*)
-    FROM information_schema.TABLE_CONSTRAINTS
-    WHERE CONSTRAINT_SCHEMA = DATABASE()
-      AND TABLE_NAME = 'article_transactions'
-      AND CONSTRAINT_NAME = 'fk_article_transaction_customer'
-);
-SET @article_customer_fk_sql := IF(
-    @article_customer_fk_exists = 0,
-    'ALTER TABLE article_transactions ADD CONSTRAINT fk_article_transaction_customer FOREIGN KEY (customer_id) REFERENCES customers (id) ON DELETE RESTRICT',
-    'SELECT 1'
-);
-PREPARE article_customer_fk_stmt FROM @article_customer_fk_sql;
-EXECUTE article_customer_fk_stmt;
-DEALLOCATE PREPARE article_customer_fk_stmt;
+-- The optional customer foreign key is managed outside the repeatable base
+-- schema so the schema can be applied safely to an existing database.
 
 CREATE TABLE IF NOT EXISTS payments (
     id                INT UNSIGNED NOT NULL AUTO_INCREMENT,
