@@ -1,0 +1,43 @@
+MOHAMED HAJITH
+FULL-STACK DEVELOPER
+Batticaloa, Sri Lanka | +94 74 052 3954 | ahammedlebbehajith@gmail.com
+github.com/HajithMohamed | linkedin.com/in/mohamed-hajith-b53559295
+PROFESSIONAL SUMMARY
+Full-stack developer and BICT (Hons) undergraduate with project experience in React, Node.js,
+Express.js, MongoDB, PHP and MySQL. Built web authentication flows, e-commerce features and
+responsive interfaces, with additional JavaFX team project experience. Seeking a junior full-stack
+developer or software engineering internship role.
+TECHNICAL SKILLS
+Languages: JavaScript, Java, PHP, SQL, HTML5, CSS3
+Frontend: React, Redux Toolkit, Tailwind CSS, Bootstrap, jQuery
+Backend & databases: Node.js, Express.js, Spring Boot, MongoDB, MySQL
+Tools & concepts: Git, GitHub, Vite, Maven, JavaFX, REST APIs, JWT, OOP
+PROJECT EXPERIENCE
+Saga Elite | Full-Stack Developer & Team Lead
+MERN Stack | saga-elite.shop | Team project
+ Led a team of four to build and deploy an e-commerce platform, from requirements analysis to release.
+ Developed customer and administrator features for product management, JWT authentication and
+order handling; coordinated GitHub branching workflows.
+Faculty Event Management System | Co-Contributor
+Spring Boot, React, MySQL, JWT, Cloudinary | Team project
+ Contributed to an event platform with administrator, lecturer and student roles and event approval
+workflows.
+ Implemented JWT-protected REST APIs, scheduled email reminders and image uploads; collaborated
+through pull requests and code review.
+NEXTGEN | Mobile Shop E-Commerce Website
+PHP, MySQL, JavaScript, jQuery, Bootstrap
+ Developed a mobile shop website with product browsing, user accounts, shopping cart and checkout
+workflows.
+ Built administrative pages for managing products, orders and customers, backed by a MySQL
+database.
+Nano-Zillas | University Management System (Team Project)
+Java, JavaFX, FXML, MySQL, Maven
+ Contributed to a JavaFX application with role-specific interfaces for university staff and students.
+ Applied OOP and MVC to modules for courses, attendance, grades and timetables.
+EDUCATION
+Bachelor of Information and Communication Technology (Hons)
+University of Ruhuna | Expected completion: 2027
+Current status: Third year, second semester
+CERTIFICATION & LANGUAGES
+The Complete Full-Stack Web Development Bootcamp | Udemy
+Languages: English, Tamil, Sinhala

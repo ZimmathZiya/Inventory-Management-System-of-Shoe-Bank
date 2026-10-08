@@ -54,7 +54,10 @@ Use your actual Render URL for `APP_URL`; never commit it with credentials. Rend
 
 ## Database initialization
 
-Import into the existing `freedb_xGoOT6yI` database using FreeDB's phpMyAdmin/SQL import tool. Select that database first, then import the files in this exact order:
+The container applies `database/schema.sql` automatically at startup using
+idempotent `CREATE TABLE IF NOT EXISTS` statements. For a fresh database, you
+can also import the files manually using the provider's SQL tool. Select the
+target database first, then import them in this exact order:
 
 ```bash
 1. `database/schema.sql`

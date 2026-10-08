@@ -13,6 +13,13 @@ spl_autoload_register(static function (string $class): void {
 
 try {
     $db = \App\Core\Database::instance();
+
+    // Bootstrap the base schema before additive runtime repairs. This is
+    // idempotent and is required for a fresh external database because later
+    // migrations reference tables such as customers and users.
+    $db->pdo()->exec(file_get_contents(BASE_PATH . '/database/schema.sql'));
+    echo "Ready: database/schema.sql\n";
+
     foreach (['010_flexible_article_transactions.sql', '012_persistent_product_media.sql'] as $migration) {
         foreach (explode(';', file_get_contents(BASE_PATH . '/database/migrations/' . $migration)) as $sql) {
             if (trim($sql) !== '') $db->pdo()->exec($sql);
