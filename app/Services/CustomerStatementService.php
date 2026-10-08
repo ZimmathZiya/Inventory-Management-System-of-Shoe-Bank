@@ -52,12 +52,12 @@ class CustomerStatementService
         if ($from) { $where[] = "{$dateSql} >= ?"; $params[] = $from; }
         if ($to) { $where[] = "{$dateSql} <= ?"; $params[] = $to; }
         $rows = $db->all(
-            'SELECT ct.*, pay.reference AS payment_reference, pay.payment_method,
+            "SELECT ct.*, pay.reference AS payment_reference, pay.payment_method,
                     ch.cheque_number, ch.status AS cheque_status
                FROM customer_transactions ct
-          LEFT JOIN payments pay ON ct.reference_type = "payment" AND pay.id = ct.reference_id
+          LEFT JOIN payments pay ON ct.reference_type = 'payment' AND pay.id = ct.reference_id
           LEFT JOIN cheques ch ON ch.payment_id = pay.id
-              WHERE ' . implode(' AND ', $where) . "
+              WHERE " . implode(' AND ', $where) . "
            ORDER BY {$dateSql}, ct.created_at, ct.id",
             $params
         );

@@ -41,7 +41,7 @@ class Payment extends Model
     public function receipt(int $id): ?array
     {
         return $this->db()->first(
-            'SELECT p.*, c.name AS customer_name, c.phone AS customer_phone,
+            "SELECT p.*, c.name AS customer_name, c.phone AS customer_phone,
                     ch.id AS cheque_id, ch.cheque_number, ch.cheque_date, ch.deposit_date,
                     ch.bank_name, ch.status AS cheque_status, ch.image_path AS cheque_image_path,
                     ch.thumb_path AS cheque_thumb_path,
@@ -49,9 +49,9 @@ class Payment extends Model
                FROM payments p
                JOIN customers c ON c.id = p.customer_id
           LEFT JOIN cheques ch ON ch.payment_id = p.id
-          LEFT JOIN customer_transactions ct ON ct.reference_type = "payment" AND ct.reference_id = p.id
+          LEFT JOIN customer_transactions ct ON ct.reference_type = 'payment' AND ct.reference_id = p.id
               WHERE p.id = ?
-           ORDER BY ct.id DESC LIMIT 1',
+           ORDER BY ct.id DESC LIMIT 1",
             [$id]
         );
     }

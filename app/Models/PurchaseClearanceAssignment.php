@@ -18,13 +18,13 @@ class PurchaseClearanceAssignment extends Model
     public function byPurchase(int $purchaseId): array
     {
         return $this->db()->all(
-            'SELECT a.*, cp.name AS clearance_person_name, cp.phone AS clearance_person_phone,
+            "SELECT a.*, cp.name AS clearance_person_name, cp.phone AS clearance_person_phone,
                     (SELECT COUNT(*) FROM parcels pr WHERE pr.assignment_id = a.id) AS parcels_logged,
-                    (SELECT COUNT(*) FROM parcels pr WHERE pr.assignment_id = a.id AND pr.status = "received") AS parcels_received
+                    (SELECT COUNT(*) FROM parcels pr WHERE pr.assignment_id = a.id AND pr.status = 'received') AS parcels_received
                FROM purchase_clearance_assignments a
                JOIN clearance_persons cp ON cp.id = a.clearance_person_id
               WHERE a.purchase_id = ?
-           ORDER BY a.id',
+           ORDER BY a.id",
             [$purchaseId]
         );
     }
@@ -41,9 +41,9 @@ class PurchaseClearanceAssignment extends Model
     /** Total weight already assigned on a purchase, optionally ignoring one row. */
     public function assignedWeight(int $purchaseId, ?int $excludeId = null): float
     {
-        $sql    = 'SELECT COALESCE(SUM(assigned_weight_kg), 0)
+        $sql    = "SELECT COALESCE(SUM(assigned_weight_kg), 0)
                      FROM purchase_clearance_assignments
-                    WHERE purchase_id = ? AND status <> "cancelled"';
+                    WHERE purchase_id = ? AND status <> 'cancelled'";
         $params = [$purchaseId];
 
         if ($excludeId !== null) {
@@ -89,8 +89,8 @@ class PurchaseClearanceAssignment extends Model
     public function updateStatusForPurchase(int $purchaseId, string $status): void
     {
         $this->db()->query(
-            'UPDATE purchase_clearance_assignments SET status = ?
-              WHERE purchase_id = ? AND status <> "cancelled"',
+            "UPDATE purchase_clearance_assignments SET status = ?
+              WHERE purchase_id = ? AND status <> 'cancelled'",
             [$status, $purchaseId]
         );
     }
@@ -121,9 +121,9 @@ class PurchaseClearanceAssignment extends Model
         }
 
         $weight = (float) $this->db()->scalar(
-            'SELECT COALESCE(SUM(COALESCE(arrived_weight_kg, weight_kg)), 0)
+            "SELECT COALESCE(SUM(COALESCE(arrived_weight_kg, weight_kg)), 0)
                FROM parcels
-              WHERE assignment_id = ? AND status = "received"',
+              WHERE assignment_id = ? AND status = 'received'",
             [$id]
         );
         $amount = round($weight * (float) ($assignment['rate_per_kg'] ?? 0), 2);

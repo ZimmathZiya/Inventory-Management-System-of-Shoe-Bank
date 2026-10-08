@@ -18,18 +18,18 @@ class CustomerTransaction extends Model
     public function byCustomer(int $customerId, int $limit = 100): array
     {
         return $this->db()->all(
-            'SELECT ct.*, u.name AS created_by_name,
+            "SELECT ct.*, u.name AS created_by_name,
                     pay.payment_method, pay.payment_date,
                     ch.id AS cheque_id, ch.cheque_number, ch.cheque_date,
                     ch.image_path AS cheque_image_path, ch.thumb_path AS cheque_thumb_path
              FROM customer_transactions ct
              LEFT JOIN users u ON ct.created_by = u.id
              LEFT JOIN payments pay
-                    ON ct.reference_type = "payment" AND pay.id = ct.reference_id
+                    ON ct.reference_type = 'payment' AND pay.id = ct.reference_id
              LEFT JOIN cheques ch ON ch.payment_id = pay.id
              WHERE ct.customer_id = ?
              ORDER BY COALESCE(ct.transaction_date, DATE(ct.created_at)) DESC, ct.created_at DESC, ct.id DESC
-             LIMIT ?',
+             LIMIT ?",
             [$customerId, $limit]
         );
     }
@@ -48,9 +48,9 @@ class CustomerTransaction extends Model
     public function paymentLedgerEntry(int $paymentId): ?array
     {
         return $this->db()->first(
-            'SELECT * FROM customer_transactions
-              WHERE reference_type = "payment" AND reference_id = ?
-           ORDER BY id DESC LIMIT 1',
+            "SELECT * FROM customer_transactions
+              WHERE reference_type = 'payment' AND reference_id = ?
+           ORDER BY id DESC LIMIT 1",
             [$paymentId]
         );
     }

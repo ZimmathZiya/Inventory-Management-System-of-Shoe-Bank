@@ -39,13 +39,13 @@ class Parcel extends Model
     public function summary(int $purchaseId): array
     {
         $row = $this->db()->first(
-            'SELECT
+            "SELECT
                 (SELECT expected_parcels FROM purchases WHERE id = ?) AS expected,
                 COUNT(*) AS logged,
-                COALESCE(SUM(status = "received"), 0) AS received,
-                COALESCE(SUM(CASE WHEN status = "received"
+                COALESCE(SUM(status = 'received'), 0) AS received,
+                COALESCE(SUM(CASE WHEN status = 'received'
                     THEN COALESCE(arrived_weight_kg, weight_kg) END), 0) AS weight
-               FROM parcels WHERE purchase_id = ?',
+               FROM parcels WHERE purchase_id = ?",
             [$purchaseId, $purchaseId]
         ) ?: [];
 

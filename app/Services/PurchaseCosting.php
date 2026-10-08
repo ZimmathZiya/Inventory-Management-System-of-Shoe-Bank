@@ -58,10 +58,10 @@ class PurchaseCosting
     public function agentWage(int $purchaseId): array
     {
         $row = Database::instance()->first(
-            'SELECT COALESCE(SUM(clearance_cost), 0) AS cost,
+            "SELECT COALESCE(SUM(clearance_cost), 0) AS cost,
                     COALESCE(SUM(assigned_weight_kg), 0) AS weight
                FROM purchase_clearance_assignments
-              WHERE purchase_id = ? AND status <> "cancelled"',
+              WHERE purchase_id = ? AND status <> 'cancelled'",
             [$purchaseId]
         ) ?: ['cost' => 0, 'weight' => 0];
 

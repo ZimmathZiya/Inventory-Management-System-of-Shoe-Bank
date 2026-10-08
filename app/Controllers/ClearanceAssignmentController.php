@@ -179,8 +179,8 @@ class ClearanceAssignmentController extends Controller
         }
 
         $weight = (float) Database::instance()->scalar(
-            'SELECT COALESCE(SUM(COALESCE(arrived_weight_kg, weight_kg)), 0)
-               FROM parcels WHERE purchase_id = ? AND assignment_id IS NULL AND status = "received"',
+            "SELECT COALESCE(SUM(COALESCE(arrived_weight_kg, weight_kg)), 0)
+               FROM parcels WHERE purchase_id = ? AND assignment_id IS NULL AND status = 'received'",
             [$purchaseId]
         );
         if ($weight <= 0) {
@@ -198,7 +198,7 @@ class ClearanceAssignmentController extends Controller
                 'rate_per_kg' => $rate,
             ]);
             Database::instance()->query(
-                'UPDATE parcels SET assignment_id = ? WHERE purchase_id = ? AND assignment_id IS NULL AND status = "received"',
+                "UPDATE parcels SET assignment_id = ? WHERE purchase_id = ? AND assignment_id IS NULL AND status = 'received'",
                 [$assignmentId, $purchaseId]
             );
             $this->assignments->syncPaymentToReceivedWeight($assignmentId);

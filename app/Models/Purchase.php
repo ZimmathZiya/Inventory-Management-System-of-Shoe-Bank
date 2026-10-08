@@ -98,10 +98,10 @@ class Purchase extends Model
                 p.total_weight_kg AS total,
                 COALESCE((SELECT SUM(a.assigned_weight_kg)
                             FROM purchase_clearance_assignments a
-                           WHERE a.purchase_id = p.id AND a.status <> "cancelled"), 0) AS cleared,
+                           WHERE a.purchase_id = p.id AND a.status <> 'cancelled'), 0) AS cleared,
                 COALESCE((SELECT SUM(pr.weight_kg)
                             FROM parcels pr
-                           WHERE pr.purchase_id = p.id AND pr.status = "received"), 0) AS arrived,
+                           WHERE pr.purchase_id = p.id AND pr.status = 'received'), 0) AS arrived,
                 COALESCE((SELECT ga.weight_received_kg
                             FROM goods_arrivals ga
                            WHERE ga.purchase_id = p.id), 0) AS verified
@@ -220,11 +220,11 @@ class Purchase extends Model
         ) ?: [];
 
         $row['weight_cleared'] = (float) $this->db()->scalar(
-            'SELECT COALESCE(SUM(assigned_weight_kg), 0)
-               FROM purchase_clearance_assignments WHERE status <> "cancelled"'
+            "SELECT COALESCE(SUM(assigned_weight_kg), 0)
+               FROM purchase_clearance_assignments WHERE status <> 'cancelled'"
         );
         $row['weight_received'] = (float) $this->db()->scalar(
-            'SELECT COALESCE(SUM(weight_kg), 0) FROM parcels WHERE status = "received"'
+            "SELECT COALESCE(SUM(weight_kg), 0) FROM parcels WHERE status = 'received'"
         );
 
         return $row;

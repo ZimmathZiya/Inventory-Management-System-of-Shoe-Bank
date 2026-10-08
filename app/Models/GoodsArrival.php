@@ -180,7 +180,7 @@ class GoodsArrival extends Model
                         [$productId, $item['id']]
                     );
                     $this->db()->query(
-                        'UPDATE purchase_items SET product_id = ?, match_status = "matched" WHERE id = ?',
+                        "UPDATE purchase_items SET product_id = ?, match_status = 'matched' WHERE id = ?",
                         [$productId, $item['purchase_item_id']]
                     );
                 }
@@ -227,13 +227,13 @@ class GoodsArrival extends Model
             }
 
             $this->db()->query(
-                'UPDATE goods_arrivals
-                    SET status = "confirmed", confirmed_by = ?, confirmed_at = NOW(), inventory_updated = 1
-                  WHERE id = ?',
+                "UPDATE goods_arrivals
+                    SET status = 'confirmed', confirmed_by = ?, confirmed_at = NOW(), inventory_updated = 1
+                  WHERE id = ?",
                 [$userId, $arrivalId]
             );
             $this->db()->query(
-                'UPDATE purchases SET status = "completed" WHERE id = ?',
+                "UPDATE purchases SET status = 'completed' WHERE id = ?",
                 [$purchaseId]
             );
 
