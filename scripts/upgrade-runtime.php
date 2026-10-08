@@ -20,12 +20,9 @@ try {
     $db->pdo()->exec(file_get_contents(BASE_PATH . '/database/schema.sql'));
     echo "Ready: database/schema.sql\n";
 
-    foreach (['010_flexible_article_transactions.sql', '012_persistent_product_media.sql'] as $migration) {
-        foreach (explode(';', file_get_contents(BASE_PATH . '/database/migrations/' . $migration)) as $sql) {
-            if (trim($sql) !== '') $db->pdo()->exec($sql);
-        }
-        echo "Ready: {$migration}\n";
-    }
+    // The current canonical schema already contains the article transaction
+    // and product media tables. Do not replay their historical migrations:
+    // MySQL constraint names are database-wide and would collide on restart.
     $media = new \App\Services\ProductMedia();
     foreach ($db->all('SELECT path, thumb_path FROM product_images') as $image) {
         foreach (array_unique(array_filter($image)) as $path) {

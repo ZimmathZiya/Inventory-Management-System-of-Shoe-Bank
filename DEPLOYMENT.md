@@ -64,7 +64,7 @@ target database first, then import them in this exact order:
 2. `database/seed.sql`
 ```
 
-The files contain no `CREATE DATABASE`, `USE`, grants, or server-level commands, so no compatibility edit is required for an already-selected FreeDB database. `schema.sql` creates InnoDB/`utf8mb4` tables and foreign keys. An obsolete seed block for an earlier purchase-order schema was removed because those tables no longer exist in the current schema; the current purchase, arrival, and clearance tables remain intact. `seed.sql` includes `admin / admin123`; change that password immediately after first login. Do not rerun historical migrations blindly; apply only the migration required by a later release, after a database backup.
+The files contain no `CREATE DATABASE`, `USE`, grants, or server-level commands, so no compatibility edit is required for an already-selected database. `schema.sql` creates the complete current InnoDB/`utf8mb4` schema, including article transactions and product media. `seed.sql` includes `admin / admin123`; change that password immediately after first login. Do not replay historical migrations against this schema because they can duplicate foreign-key constraint names; apply only a specifically required later migration after a database backup.
 
 ## Deploy and verify
 
